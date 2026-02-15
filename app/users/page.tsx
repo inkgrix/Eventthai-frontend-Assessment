@@ -22,7 +22,7 @@ export default function UserList() {
   const [page, setPage] = useState(1);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [selectedUserName, setSelectedUserName] = useState("");
-  const [editName, setEditName] = useState(""); 
+  const [editName, setEditName] = useState("");
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedDeleteId, setSelectedDeleteId] = useState<number | null>(null);
@@ -89,6 +89,12 @@ export default function UserList() {
     setUsers(users.filter((u) => u.id !== id));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("loginTimestamp");
+    window.location.href = "/";
+  };
+
   if (!isAuth) {
     return null;
   }
@@ -96,7 +102,10 @@ export default function UserList() {
     <div className="min-h-screen bg-[#0a0c10] text-white p-4 md:p-10">
       <div className="max-w-4xl mx-auto w-full">
         <div className="p-5">
-          <h1 className="text-2xl font-bold mb-5">List Users</h1>
+          <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-800">
+            <h1 className="text-2xl font-bold">List Users</h1>
+            <Button onClick={handleLogout} className="cursor-pointer bg-red-800 hover:bg-red-900 text-white">Logout</Button>
+          </div>
           <div className="space-y-2">
             <div className="rounded-md border bg-card shadow-sm relative">
               <div className="relative w-full overflow-auto">
